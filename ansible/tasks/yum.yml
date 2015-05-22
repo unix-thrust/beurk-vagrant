@@ -1,0 +1,28 @@
+---
+###################
+# Misc. tools
+###################
+- name: Install usefull system tools
+  yum: name={{ item }} state=present
+  with_items:
+    - gcc
+    - colorgcc
+    - clang
+    - nasm
+    - ltrace
+    - git
+    - tig
+    - zsh
+    - tmux
+    - vim-minimal   # diff
+    - ctags
+    - cscope
+    - python3
+    - bpython      # diff
+    - htop
+    - xz          # diff
+    - elinks
+    - curl
+      #- libpam-dev
+      #- libssl-dev
+    - libpcap-dev

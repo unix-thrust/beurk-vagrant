@@ -1,0 +1,29 @@
+---
+###################
+# Misc. tools
+###################
+- name: Install usefull system tools
+  pkgn: name={{ item }} state=present
+  with_items:
+    - sudo
+    - gcc
+    - colorgcc
+    - clang
+    - nasm
+    - ltrace
+    - git
+    - tig
+    - zsh
+    - tmux
+    - vim
+    - exuberant-ctags
+    - cscope
+    - python3
+    - bpython3
+    - htop
+    - xz-utils
+    - elinks
+    - curl
+    - libpam-dev
+    - libssl-dev
+    - libpcap-dev

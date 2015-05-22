@@ -1,0 +1,3 @@
+[submodule "project/beurk"]
+	path = project/beurk
+	url = https://github.com/unix-thrust/beurk.git

@@ -1,0 +1,48 @@
+---
+###################
+# Backports rep.
+###################
+- name: add backports repository
+  apt_repository: repo='deb {{backports_uri}} {{backports_components}}' #'
+                  state=present
+
+###################
+# Upgrade system
+###################
+- name: apt-get update && apt-get upgrade
+  apt: update_cache=yes
+  apt: upgrade=full
+
+###################
+# Misc. tools
+###################
+- name: Install usefull system tools from backports
+  apt: name={{ item }}
+       state=present
+       default_release={{ansible_distribution_release}}-backports
+  with_items:
+    - gcc
+    - colorgcc
+    - clang
+    - git
+    - tig
+    - tmux
+    - vim
+
+- name: Install usefull system tools
+  apt: name={{ item }} state=present
+  with_items:
+    - nasm
+    - ltrace
+    - zsh
+    - exuberant-ctags
+    - cscope
+    - python3
+    - bpython3
+    - htop
+    - xz-utils
+    - elinks
+    - curl
+    - libpam-dev
+    - libssl-dev
+    - libpcap-dev

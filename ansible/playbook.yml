@@ -1,0 +1,33 @@
+---
+# http://serverfault.com/questions/587727/how-to-unify-package-installation-tasks-in-ansible
+
+- hosts: all
+  remote_user: vagrant
+  vars_files:
+    - "vars/{{ ansible_distribution }}.yml"
+  vars:
+    # Username
+    user: vagrant
+    rootkit: azazel, beurk
+    antirootkit: true
+    rootkit: true
+
+  tasks:
+    ###################
+    # Use good pkg_mgr
+    ###################
+    - include: tasks/aptget.yml
+      when: ansible_pkg_mgr == 'apt'
+    - include: tasks/yum.yml
+      when: ansible_pkg_mgr == 'yum'
+    - include: tasks/pkg.yml
+      when: ansible_pkg_mgr == 'pkgng'
+
+    ###################
+    # Install peda
+    ###################
+    - name: Install peda
+      git: repo=https://github.com/longld/peda.git dest=/home/vagrant/.peda
+    - name: Add .gdbinit file
+      copy: content=source ~/.peda/peda.py
+            dest=/home/vagrant/.gdbinit
