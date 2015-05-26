@@ -1,6 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+$script = <<SCRIPT
+NAME=`uname`
+if [[ $NAME == "FreeBSD" ]] ; then
+    ASSUME_ALWAYS_YES=YES pkg upgrade && pkg install python
+    ln -sf /usr/local/bin/python /usr/bin/python
+fi
+SCRIPT
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -9,6 +17,8 @@ Vagrant.configure(2) do |config|
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
+
+  config.vm.provision "shell", inline: $script
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "ansible/playbook.yml"
     ansible.sudo = true
@@ -42,7 +52,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "freebsd" do |freebsd|
-    freebsd.vm.box = "danielsreichenbach/freebsd-10-amd64"
+    freebsd.vm.box = "robin/freebsd-10"
     freebsd.vm.network "private_network", ip: "192.168.33.60"
     freebsd.vm.synced_folder "./project", "/home/vagrant/project", disabled: true
   end

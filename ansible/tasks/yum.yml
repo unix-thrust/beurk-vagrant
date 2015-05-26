@@ -2,7 +2,7 @@
 ###################
 # Misc. tools
 ###################
-- name: Install usefull system tools
+- name: Install usefull system tools with yum
   yum: name={{ item }} state=present
   with_items:
     - gcc

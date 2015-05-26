@@ -3,7 +3,7 @@
 # Backports rep.
 ###################
 - name: add backports repository
-  apt_repository: repo='deb {{backports_uri}} {{backports_components}}' #'
+  apt_repository: repo='deb {{backports_uri}} {{backports_components}}'
                   state=present
 
 ###################
@@ -29,7 +29,7 @@
     - tmux
     - vim
 
-- name: Install usefull system tools
+- name: Install usefull system tools with apt-get
   apt: name={{ item }} state=present
   with_items:
     - nasm
