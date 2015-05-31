@@ -48,7 +48,7 @@ Vagrant.configure(2) do |config|
   end
   
   config.vm.define "centos" do |centos|
-    centos.vm.box = "puppetlabs/centos-7.0-64-nocm"
+    centos.vm.box = "relativkreativ/centos-7-minimal"
     centos.vm.network "private_network", ip: "192.168.33.50"
   end
 
