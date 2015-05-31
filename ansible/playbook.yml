@@ -8,9 +8,22 @@
   vars:
     # Username
     user: vagrant
-    rootkit: azazel, beurk
-    antirootkit: true
-    rootkit: true
+    rootkits:
+        beurk:
+            url: https://github.com/unix-thrust/beurk.git
+            dest: ~/project/beurk
+            version: dev
+        azazel:
+            url: https://github.com/chokepoint/azazel.git
+            dest: ~/project/azazel
+            version: master
+    antirootkits:
+        ossec:
+            url: https://github.com/ossec/ossec-hids.git
+            dest: ~/project/ossec
+            version: stable
+    install_selinux: false
+    install_apparmor: false
 
   tasks:
     ###################
@@ -31,3 +44,23 @@
     - name: Add .gdbinit file
       copy: content=source ~/.peda/peda.py
             dest=/home/vagrant/.gdbinit
+
+    ###################
+    # Install rootkits
+    ###################
+    - name: Clone rootkits
+      # debug: msg="Clone {{ item.key }} in {{ item.value.dest }}."
+      git: repo={{ item.value.url }}
+           dest={{ item.value.dest }}
+           version={{ item.value.version }}
+      with_dict: rootkits
+
+    ###################
+    # Install antirootkits
+    ###################
+    - name: Clone antirootkits
+      # debug: msg="Clone {{ item.key }} in {{ item.value.dest }}."
+      git: repo={{ item.value.url }}
+           dest={{ item.value.dest }}
+           version={{ item.value.version }}
+      with_dict: antirootkits
