@@ -4,7 +4,8 @@
 $script = <<SCRIPT
 NAME=`uname`
 if [[ $NAME == "FreeBSD" ]] ; then
-    ASSUME_ALWAYS_YES=YES pkg upgrade && pkg install python
+    export ASSUME_ALWAYS_YES=YES 
+    pkg upgrade && pkg install python
     ln -sf /usr/local/bin/python /usr/bin/python
 fi
 SCRIPT
