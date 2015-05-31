@@ -1,28 +1,36 @@
 ---
 ###################
+# Upgrade system
+###################
+- name: yum upgrade
+  yum: name=* state=latest update_cache=yes
+
+###################
 # Misc. tools
 ###################
 - name: Install usefull system tools with yum
   yum: name={{ item }} state=present
   with_items:
     - gcc
-    - colorgcc
-    - clang
     - nasm
     - ltrace
     - git
-    - tig
     - zsh
     - tmux
-    - vim-minimal   # diff
+    - vim-minimal
     - ctags
     - cscope
-    - python3
-    - bpython      # diff
     - htop
-    - xz          # diff
+    - xz
     - elinks
     - curl
-      #- libpam-dev
-      #- libssl-dev
-    - libpcap-dev
+
+- name: Install usefull system tools with yum on Fedora
+  yum: name={{ item }} state=present
+  with_items:
+    - colorgcc
+    - clang
+    - tig
+    - python3
+    - bpython
+  when: ansible_distribution == 'Fedora'
