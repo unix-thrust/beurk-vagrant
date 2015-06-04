@@ -55,6 +55,7 @@ Vagrant.configure(2) do |config|
     freebsd.vm.box = "robin/freebsd-10"
     freebsd.vm.network "private_network", ip: "192.168.33.60"
     freebsd.vm.synced_folder "./project", "/home/vagrant/project", disabled: true
+    config.vm.synced_folder ".", "/vagrant", disabled: true
   end
 
   # Disable automatic box update checking. If you disable this, then
