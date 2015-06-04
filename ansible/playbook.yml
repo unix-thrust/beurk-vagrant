@@ -31,10 +31,13 @@
     ###################
     - include: tasks/aptget.yml
       when: ansible_pkg_mgr == 'apt'
+      sudo: yes
     - include: tasks/yum.yml
       when: ansible_pkg_mgr == 'yum'
+      sudo: yes
     - include: tasks/pkg.yml
       when: ansible_pkg_mgr == 'pkgng'
+      sudo: yes
 
     ###################
     # Install peda

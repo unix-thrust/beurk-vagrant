@@ -22,7 +22,6 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: $script
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "ansible/playbook.yml"
-    ansible.sudo = true
   end
 
   # Every Vagrant development environment requires a box. You can search for
