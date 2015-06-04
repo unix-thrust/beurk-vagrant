@@ -1,11 +1,6 @@
 # Unix-Thrust Vagrant boxes #
 Unix-Thrust Vagrant boxes for automatic testing
 
-## Multiple branches ##
-
-- **dev** : usefull for the developpement of the Unix-Thrust projects
-- **project branch** : specific commit for an Unix-Thrust project
-
 ## Requirements ##
 - [Virtualbox](https://www.virtualbox.org)
 - [Vagrant](http://docs.vagrantup.com/v2/installation/)
@@ -13,8 +8,9 @@ Unix-Thrust Vagrant boxes for automatic testing
 
 ## Quick start ##
 ```
-# clone unix-vagrant and its submodules (which are the available projects)
-git submodule update --init --recursive https://github.com/unix-thrust/unix-vagrant.git
+# Clone unix-vagrant
+# All the available projects are provisionned with ansible
+git clone https://github.com/unix-thrust/unix-vagrant.git
 ```
 
 The VM can communicate between us in the private network 192.168.0.0/32
