@@ -24,6 +24,9 @@
     - xz
     - elinks
     - curl
+    - pam-devel
+    - openssl-devel
+    - libpcap-devel
 
 - name: Install usefull system tools with yum on Fedora
   yum: name={{ item }} state=present
