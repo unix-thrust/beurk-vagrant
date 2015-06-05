@@ -3,7 +3,9 @@
 # Upgrade system
 ###################
 - name: yum upgrade
-  yum: name=* state=latest update_cache=yes
+  yum: name=* state=latest
+  # yum: name=* state=latest update_cache=yes
+  # update_cache require ansible 1.9 or greater
 
 ###################
 # Misc. tools
@@ -20,7 +22,6 @@
     - vim-minimal
     - ctags
     - cscope
-    - htop
     - xz
     - elinks
     - curl
@@ -31,6 +32,7 @@
 - name: Install usefull system tools with yum on Fedora
   yum: name={{ item }} state=present
   with_items:
+    - htop
     - colorgcc
     - clang
     - tig
