@@ -1,0 +1,296 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> The basics !
+set nocompatible                " who still uses vi ?
+filetype off                    " disable before vundle loads
+let mapleader="\\"              " must come before leader mappings ! 
+let MACHINE=$MACHINE            " export $MACHINE for specific configs
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Vundle Bundles
+set runtimepath+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+
+runtime! ftplugin/man.vim
+
+Plugin 'gmarik/Vundle.vim'
+
+" ide plugins
+Plugin 'ctrlp.vim'
+Plugin 'Syntastic'
+Plugin 'mhinz/vim-signify'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tComment'
+Plugin 'surround.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'sjl/gundo.vim'
+Plugin 'majutsushi/tagbar'
+
+" misc plugins
+Plugin 'bling/vim-airline'
+Plugin 'vim-scripts/hexman.vim'
+
+" filetype plugins
+Plugin 'nginx.vim'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'armasm'
+
+" c/c++ header easy
+" Plugin "aperezdc/vim-template"
+
+" rust support
+" Plugin "wting/rust.vim"
+" Plugin "rust-lang/rust.vim"
+
+" markdown rendering
+" Plugin "suan/vim-instant-markdown"
+
+
+call vundle#end()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Preferences
+filetype plugin indent on         " just after vundle, required
+set title                         " send title to terminal
+set history=1000
+set undolevels=1000
+set wildmenu                      " enhance vim menu completion
+set wildignore+=*/tmp/*,*.so,*.swp,*.a,a.out,*.o,*~,*.pyc,*.d
+set viminfo+="~/.viminfo"
+set modelines=20                  " how many lines are modeline checked
+
+" use bash shell, interactively, to keep $PATH as is shall be on os/x
+set shell=bash
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Ergonomic stuff
+set nowrap
+set scrolloff=7                   " space to keep above/below cursor on scroll
+set sidescrolloff=5               " same as above, for horizontal scrolling
+set backspace=indent,eol,start    " let backspace acts as it should !
+set timeoutlen=1000 ttimeoutlen=0 " remove delay while pressing <Esc>
+set showcmd                       " show visual mode selected lines, etc...
+set showmatch
+set sidescroll=1                  " scroll char by char (onerous)
+set ttyfast
+
+au FileChangedShell * echo "Warning: File changed on disk"
+set autoread
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Look and Feel !
+syntax on
+set number
+set relativenumber
+" set display=uhex,lastline         " better display for binary files
+set laststatus=2                  " always show status line
+set cursorline
+
+colorscheme desert
+highlight Normal ctermfg=white
+highlight LineNr ctermbg=232 ctermfg=239
+highlight CursorLine term=underline cterm=None ctermbg=234
+
+set colorcolumn=81
+highlight ColorColumn ctermbg=233
+
+set listchars=tab:\|\-
+set list
+highlight SpecialKey ctermfg=235
+
+let c_space_errors=1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Search features
+set ignorecase                    " ignore case by default
+set smartcase                     " don't ignore case if capital letter
+set hlsearch                      " hilight all search matches
+set incsearch                     " hilight first match in real time
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Indentation
+set smartindent
+set tabstop=4                       " display tabs as 4 chars
+set softtabstop=4                   " fake tabs size
+set shiftwidth=4                    " default indentation
+set expandtab                       " <tab> indents with spaces
+
+" c, cpp and Makefiles use real tabs
+" autocmd FileType c,cpp,make setlocal noexpandtab
+autocmd FileType h,c,make setlocal noexpandtab
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Custom mappings
+
+" Toggle vertical cursor column by pressing <F2>
+nmap <F2> :set cursorcolumn! <CR>
+
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :tabedit $MYVIMRC <CR>
+nmap <silent> <leader>sv :source $MYVIMRC <CR>
+
+" make C-L do its job, and also disable hilighted matches
+noremap <silent><C-L> :nohlsearch<CR><C-L>
+
+" Go to real middle of current line (Ctrl-M)
+nmap <C-M> :exe 'normal '.(virtcol('$')/2).'\|' <CR>
+
+" Open hexman helpfile
+nmap <silent> <leader>hh :vsp $SYNCONF/vim/bundle/hexman.vim/README <CR>
+
+" toggle paste mode
+nnoremap <C-N>:set invpaste paste?<CR>
+imap <C-N> <C-O>:set invpaste paste?<CR>
+set pastetoggle=<C-N>
+
+" Open ctrlp plugin in MRU mode
+nmap <C-B> :CtrlPBuffer <CR>
+
+" open/close nerdtree plugin bar
+nmap <leader>n :NERDTreeToggle <CR>
+
+" open/close gundo plugin bar
+nmap <leader>u :GundoToggle <CR>
+
+" tagbar shortcuts
+nmap <leader>t :TagbarOpenAutoClose <CR>
+nmap <leader>T :TagbarToggle <CR>
+
+" open vertical vimdiff based on git
+nmap <leader>gd :Gvdiff <CR>
+" git blame
+nmap <leader>gb :Gblame <CR>
+
+" C development helpers
+nmap <leader>m :make<CR><CR><CR>:cw<CR>
+nmap <leader>rt :!ctags -RV .<CR>
+
+" fast window resize with arrow keys
+" map <UP> <C-W>5+
+" map <DOWN> <C-W>5-
+" map <LEFT> <c-w>5<
+" map <RIGHT> <c-w>5>
+
+nmap K <leader>K
+
+" write as root :W
+command! W w !sudo dd of=%
+
+" toggle line number display
+nmap <silent> <leader>l :se nu! rnu! <CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> File storage customizations
+
+" store .swp files on /tmp to prevent data loss
+set dir=/tmp
+
+" persistent undo history
+set undodir=/tmp
+set undofile
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Syntastic plugin
+let g:syntastic_c_check_header = 1
+let g:syntastic_c_auto_refresh_includes = 1
+let g:syntastic_c_include_dirs = ['include', 
+                                \ 'includes',
+                                \ '../includes',
+                                \ 'inc'
+                                \ ]
+let g:syntastic_c_checkers=['gcc']
+let g:syntastic_disabled_filetypes=['o', 'a', 'd']
+
+" for nasm dev
+let g:syntastic_nasm_nasm_post_args="-f macho64"
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Disable netrw plugin
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
+let g:netrw_dirhistmax   = 1
+let g:netrw_dirhist_cnt  = 1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Ctrlp plugin
+
+let g:ctrlp_working_path_mode = ''
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_max_files = 1000
+let g:ctrlp_custom_ignore = {
+            \ 'dir':  '\v[\/](wordlists|\.git)$',
+            \ 'file': '\v\.(exe|so|dll)$',
+            \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+            \ }
+let g:ctrlp_abbrev = {
+            \ 'gmode': 'i',
+            \ 'abbrevs': [
+            \ {
+            \ 'pattern': '^lft',
+            \ 'expanded': '@cd ~/dev/libft',
+            \ 'mode': 'pfrz',
+            \ },
+            \ {
+            \ 'pattern': '^lsh',
+            \ 'expanded': '@cd ~/dev/shnake',
+            \ 'mode': 'pfrz',
+            \ },
+            \ ]
+            \ }
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> NerdTree plugin
+
+" enhance nerdtree behavior
+let bclose_multiple = 0
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> Gundo plugin
+
+" open gundo graph in the right side instead of left
+let g:gundo_right = 1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> vim-signify plugin
+
+" give priority to syntastic
+let g:signify_sign_overwrite = 1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> airline plugin
+
+" remove airline utf-8 separators
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols={'branch': '', 'whitespace': ''}
+
+" enable tabline with straight separators
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" -> vim_template plugin
+
+" disable automatic insertion of template in new files.
+" let g:templates_no_autocmd = 1
+" specify a directory from where to search for additional global templates.
+let g:templates_directory = '~/.vim/templates'

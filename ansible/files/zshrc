@@ -1,0 +1,107 @@
+PLATFORM=`uname`
+
+export ADOTDIR=~/.antigen
+
+# Load plugin manager
+source ~/.antigen/antigen.zsh
+touch ~/.myzshrc
+source ~/.myzshrc
+
+# Load antigne Bundle
+antigen use oh-my-zsh
+antigen bundles <<EOBUNDLES
+command-not-found
+extract
+zsh-users/zsh-syntax-highlighting
+sindresorhus/pure
+EOBUNDLES
+antigen apply
+
+# Config prompt
+autoload -U promptinit && promptinit
+PROMPT='%(?.%F{magenta}.%F{red})#%f '
+
+# Emacs binding
+bindkey -e
+
+# Zsh settings
+setopt notify
+setopt nohup
+setopt nobeep
+export KEYTIMEOUT=1
+export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd:cd ..:cd.."
+export HISTSIZE=25000
+export SAVEHIST=10000
+export HISTFILE=~/.zsh_history
+
+# Automatically list directory contents on `cd`.
+auto-ls () { ls -F }
+chpwd_functions=( auto-ls $chpwd_functions )
+
+# Export env
+export TERM=xterm-256color
+export PAGER=less
+export PATH=~/0xbin:$PATH
+export EDITOR=vim
+export LC_ALL=C
+
+# Alias
+alias cm=commit
+alias st='git status'
+alias gadd='git add'
+alias grm='git rm'
+alias gmv='git mv -f'
+alias gls='git ls-tree -r --full-tree HEAD'
+alias glog='git log'
+alias gdiff='git diff'
+alias cl='git clone'
+alias push='git push'
+alias pull='git pull'
+alias netview='netstat -tualp'
+alias apt-install='apt-get install --no-install-recommends'
+alias apt-update='apt-get update && apt-get upgrade'
+alias apt-search='apt-cache search'
+alias dh='dirs -v'
+alias vi='vim'
+alias pep8='pep8 --ignore=E501,E251,W391,W292'
+
+alias nbr-files='find . -name \*.c -o -name \*.h -exec cat '{}' \; | wc -l'
+
+commit()
+{
+	git commit -m $1
+}
+
+vimex()
+{
+	$EDITOR $1
+	chmod +x $1
+}
+
+# Restore directory stack
+DIRSTACKSIZE=20
+DIRSTACKFILE=~/.zdirs
+setopt autopushd pushdminus pushdsilent pushdtohome
+if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
+	dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+	[[ -d $dirstack[1] ]] && cd $dirstack[1]
+fi
+chpwd()
+{
+	if (( $DIRSTACKSIZE <= 0 )) || [[ -z $DIRSTACKFILE ]]; then return; fi
+	local -ax my_stack
+	my_stack=( ${PWD} ${dirstack} )
+	builtin print -l ${(u)my_stack} >! ${DIRSTACKFILE}
+}
+
+zman()
+{
+	PAGER="less -g -s '+/^       "$1"'" man zshall
+}
+
+foreground-vi()
+{
+	fg %vi
+}
+zle -N foreground-vi
+bindkey '^Z' foreground-vi

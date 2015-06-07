@@ -43,10 +43,51 @@
     # Install peda
     ###################
     - name: Install peda
-      git: repo=https://github.com/longld/peda.git dest=/home/vagrant/.peda
-    - name: Add .gdbinit file
-      copy: content=source ~/.peda/peda.py
-            dest=/home/vagrant/.gdbinit
+      git: repo=https://github.com/longld/peda.git dest=~/.peda
+
+    ###################
+    # Install gdbinit
+    ###################
+    - name: Add BEURK .gdbinit file
+      copy: src=files/gdbinit
+            dest=~/.gdbinit
+
+    ###################
+    # Install scripts
+    ###################
+    - name: Install scripts
+      git: repo=https://github.com/nil0x42/scripts.git dest=~/0xbin
+
+    ###################
+    # Install vim
+    ###################
+    - name: Install vim config
+      synchronize: src=files/vim
+                   dest=/home/vagrant/.vim
+
+    - name: Install vundle
+      git: repo=https://github.com/gmarik/vundle.git dest=~/.vim/bundle/vundle
+
+    # - name: Install vim Plugin
+    #   command: vim -E +BundleInstall +qa
+
+    ###################
+    # Install antigen
+    ###################
+    - name: Install antigen
+      git: repo=https://github.com/zsh-users/antigen.git
+           dest=~/.antigen
+
+    ###################
+    # Install zsh
+    ###################
+    - name: Install zsh config
+      copy: src=files/zshrc
+            dest=~/.zshrc
+
+    - name: Use zsh instead of bash 
+      command: chsh -s /bin/zsh vagrant
+      sudo: yes
 
     ###################
     # Install rootkits

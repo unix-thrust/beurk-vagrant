@@ -28,6 +28,7 @@
     - tig
     - tmux
     - vim
+    - zsh
 
 - name: Install usefull system tools with apt-get
   apt: name={{ item }} state=present

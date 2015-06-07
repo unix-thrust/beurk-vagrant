@@ -19,7 +19,8 @@
     - git
     - zsh
     - tmux
-    - vim-minimal
+    - vim-enhanced
+    - zsh
     - ctags
     - cscope
     - xz

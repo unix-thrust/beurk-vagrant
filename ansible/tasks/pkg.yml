@@ -16,6 +16,7 @@
     - zsh
     - tmux
     - vim
+    - zsh
     - ctags
     - cscope
     - python3
@@ -27,8 +28,4 @@
     # - libpam-dev
     # - libssl-dev
     - libpcap
-
-- name: Fix missing /bin/bash
-  file: src=/usr/local/bin/bash
-        dest=/bin/bash
-        state=link
+    - gmake
