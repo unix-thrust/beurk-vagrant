@@ -5,6 +5,7 @@
 - name: Install usefull system tools with pkg
   pkgng: name={{ item }} state=present
   with_items:
+    - rsync
     - sudo
     - gcc
     - gdb

@@ -21,6 +21,7 @@
        state=present
        default_release={{ansible_distribution_release}}-backports
   with_items:
+    - rsync
     - gcc
     - gdb
     - colorgcc
