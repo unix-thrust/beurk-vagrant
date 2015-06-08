@@ -14,6 +14,7 @@
   yum: name={{ item }} state=present
   with_items:
     - gcc
+    - gdb
     - nasm
     - ltrace
     - git

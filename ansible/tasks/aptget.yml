@@ -22,6 +22,7 @@
        default_release={{ansible_distribution_release}}-backports
   with_items:
     - gcc
+    - gdb
     - colorgcc
     - clang
     - git
