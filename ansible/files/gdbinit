@@ -1,4 +1,4 @@
 python
 import subprocess, os
-gdb.execute('set environment LD_PRELOAD = ' + os.environ.get('HOME') + '/personal/beurk/libselinux.so' )
+gdb.execute('set environment LD_PRELOAD = ' + os.environ.get('HOME') + '/project/beurk/libselinux.so' )
 end

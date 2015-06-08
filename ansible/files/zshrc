@@ -65,6 +65,7 @@ alias apt-search='apt-cache search'
 alias dh='dirs -v'
 alias vi='vim'
 alias pep8='pep8 --ignore=E501,E251,W391,W292'
+alias peda='gdb -q -x /home/vagrant/.peda/peda.py'
 
 alias nbr-files='find . -name \*.c -o -name \*.h -exec cat '{}' \; | wc -l'
 
