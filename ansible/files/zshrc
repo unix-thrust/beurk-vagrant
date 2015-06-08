@@ -13,6 +13,7 @@ antigen bundles <<EOBUNDLES
 command-not-found
 extract
 zsh-users/zsh-syntax-highlighting
+mafredri/zsh-async
 sindresorhus/pure
 EOBUNDLES
 antigen apply
