@@ -62,14 +62,14 @@
     # Install vim
     ###################
     - name: Install vim config
-      synchronize: src=files/vim
-                   dest=/home/vagrant/.vim
+      synchronize: src=files/vim/
+                   dest=~/.vim
 
     - name: Install vundle
-      git: repo=https://github.com/gmarik/vundle.git dest=~/.vim/bundle/vundle
+      git: repo=https://github.com/gmarik/vundle.git dest=~/.vim/bundle/Vundle.vim
 
-    # - name: Install vim Plugin
-    #   command: vim -E +BundleInstall +qa
+    - name: Install vim Plugin
+      command: vim +PluginInstall +qa
 
     ###################
     # Install antigen
