@@ -24,6 +24,9 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "ansible/playbook.yml"
   end
 
+  ## Foward BEURK port for testing purpose
+  config.vm.network "forwarded_port", guest: 3005, host: 3005
+
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.define "debian7" do |debian7|
