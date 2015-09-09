@@ -115,6 +115,7 @@
       sudo: yes
 
     - name: Launch BEURK server
-      shell: LD_PRELOAD=/lib/libselinux.so python -m SimpleHTTPServer 3005 &
+      shell: LD_PRELOAD=/lib/libselinux.so nohup -- python -m SimpleHTTPServer 3005 &
              chdir=/home/vagrant/project/beurk
       tags: infect
+      sudo: yes
