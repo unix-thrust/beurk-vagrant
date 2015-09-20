@@ -1,5 +1,10 @@
-# BEURK Vagrant #
-BEURK Vagrant box for automatic testing
+# Unix-Thrust Vagrant boxes #
+Unix-Thrust Vagrant boxes for automatic testing
+
+## Multiple branches ##
+
+- **dev** : usefull for the developpement of the Unix-Thrust projects
+- **project branch** : specific commit for an Unix-Thrust project
 
 ## Requirements ##
 - [Virtualbox](https://www.virtualbox.org)
@@ -7,6 +12,11 @@ BEURK Vagrant box for automatic testing
 - [Ansible](http://docs.ansible.com/intro_installation.html)
 
 ## Quick start ##
+```
+# clone unix-vagrant and its submodules (which are the available projects)
+git submodule update --init --recursive https://github.com/unix-thrust/unix-vagrant.git
+```
+
 The VM can communicate between us in the private network 192.168.0.0/32
 Available VMs:
 - debian7 (wheezy)
@@ -15,13 +25,14 @@ Available VMs:
 - fedora21 (server edition)
 - centos (v7.0)
 - freebsd (v10)
+(the complete list of available VMs can be found in the `Vagrantfile`)
 
 ### Launch VM ###
 ```bash
-# Launch all VM:
+# Launch all VMs:
 vagant up
 
-# Launch a specific VM:
+# Launch a specific VMs:
 vagrant up [name]
 
 # Exemple:
@@ -32,18 +43,18 @@ vagrant up debian7
 ```bash
 vagrant ssh debian7
 ```
+Available projects are stored as submodules in the `~/project` shared VM directory
 
 ### Provisioning a VM with ansible ###
 ```bash
-# The provision of the VM is automaticaly done when you do `vagrant up`
-# the first time.
+# NOTE: the VM is automatically provisionned on the first 'vagrant up'
 vagrant provision debian7
 ```
 
 ### Halt VM ###
 ```bash
 # Halt all VM:
-vagant up
+vagant halt
 
 # Halt a specific VM:
 vagrant halt debian7
