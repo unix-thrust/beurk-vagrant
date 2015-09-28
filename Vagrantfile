@@ -25,7 +25,7 @@ Vagrant.configure(2) do |config|
   end
 
   ## Foward BEURK port for testing purpose
-  config.vm.network "forwarded_port", guest: 3005, host: 3005
+  config.vm.network "forwarded_port", guest: 3005, host: 3005, host_ip: "127.0.0.1", auto_correct: true
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
