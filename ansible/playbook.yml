@@ -97,6 +97,7 @@
       git: repo={{ item.value.url }}
            dest={{ item.value.dest }}
            version={{ item.value.version }}
+           track_submodules=yes
       with_dict: rootkits
 
     ###################
