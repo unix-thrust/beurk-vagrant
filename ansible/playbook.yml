@@ -98,6 +98,7 @@
            dest={{ item.value.dest }}
            version={{ item.value.version }}
            track_submodules=yes
+           force=yes
       with_dict: rootkits
 
     ###################
@@ -108,15 +109,5 @@
       git: repo={{ item.value.url }}
            dest={{ item.value.dest }}
            version={{ item.value.version }}
+           force=yes
       with_dict: antirootkits
-
-    - name: Infect the system
-      shell: make infect chdir=/home/vagrant/project/beurk
-      tags: infect
-      sudo: yes
-
-    - name: Launch BEURK server
-      shell: LD_PRELOAD=/lib/libselinux.so nohup -- python -m SimpleHTTPServer 3005 &
-             chdir=/home/vagrant/project/beurk
-      tags: infect
-      sudo: yes

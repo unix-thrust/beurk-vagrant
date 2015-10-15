@@ -4,7 +4,7 @@
 $script = <<SCRIPT
 NAME=`uname`
 if [[ $NAME == "FreeBSD" ]] ; then
-    export ASSUME_ALWAYS_YES=YES 
+    export ASSUME_ALWAYS_YES=YES
     pkg upgrade && pkg install python
     ln -sf /usr/local/bin/python /usr/bin/python
 fi
@@ -48,7 +48,7 @@ Vagrant.configure(2) do |config|
     fedora21.vm.box = "hansode/fedora-21-server-x86_64"
     fedora21.vm.network "private_network", ip: "192.168.33.40"
   end
-  
+
   config.vm.define "centos" do |centos|
     centos.vm.box = "relativkreativ/centos-7-minimal"
     centos.vm.network "private_network", ip: "192.168.33.50"
